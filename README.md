@@ -23,9 +23,9 @@ UART2 with GPIO 16 and 17 willbe used for the GPS module.
 
 Edit the lmic_project_config.h
 
-#define CFG_eu868 1
-#define CFG_sx1276_radio 1
-#define LMIC_USE_INTERRUPTS
+  - #define CFG_eu868 1
+  - #define CFG_sx1276_radio 1
+  - #define LMIC_USE_INTERRUPTS
     
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
@@ -124,39 +124,9 @@ Firmware version 2.1.19 of the LoRaWAN module is mandatory for OTAA to work.
   
 ## Changelog
 
-  - 13.03.2020
-    - Enable ESP32 Deep Sleep mode
-    - Allign packet counter to TTN console
+  - 30.12.2020
+    - First commit
 
-  - 12.03.2020
-    - Fix OTAA join, caused by Duty Cycle limitation
-    - Improve status information
-    - Add the possability to use the tester without M5GO Base and/or GPS module.
-
-  - 09.03.2020
-    - Add LowPower mode for LoRaWAN module
-    - improve SF selection, ADR, and Duty Cycle check
-    - inform about Duty Cycle restriction in NACK and LCR mode
-   
-  - 08.03.2020
-    - Enforce Duty Cycle check
-    - Fix SF selection and ADR for ACK and MAN mode
-
-  - 05.03.2020
-    - Fix SF selection and ADR for NACK mode
-    - Add OTAA support
-    
-  - 04.03.2020
-    - Move gpsupdate task to core 0
-    
-  - 03.03.2020
-    - improve gspupdate task
-    
-  - 28.02.2020
-    - fix typos
-    
-  - 27.02.2020
-    - switch to M5.Power library
 
 ## ToDo
   - create tasks for M5UI
