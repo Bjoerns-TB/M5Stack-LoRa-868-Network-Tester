@@ -126,9 +126,15 @@ Firmware version 2.1.19 of the LoRaWAN module is mandatory for OTAA to work.
   - If you have a valid GPS fix the GPS track will be written to the SD card as a GPX file.
   - Periodic transmission will only work with a valid GPS fix and an GPS age below 2 seconds
   
+  
+## Known Bugs
+  - Sometimes, if an ACK is not received, the node tries to resend the last message multiple times. This will interfer with other jobs. Retries are turned of, but sometimes happen.
+  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 120 seconds.
+  
+  
 ## Changelog
 
-  - 30.12.2020
+  - 29.12.2020
     - First commit
 
 
