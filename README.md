@@ -30,7 +30,11 @@ Edit the lmic_project_config.h
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
   
-Change the your TTN keys under //LoRaWAN ABP //LoRaWAN OTAA in the networktester.ino file. They are filled in as is from the TTN console. If you want yo use OTAA you have to register a second device for your application. 
+Change the your TTN keys under //LoRaWAN ABP and //LoRaWAN OTAA in the networktester.ino file. If you want yo use OTAA you have to register a second device for your application. 
+
+In oder to make the LoRa 868 module work with LMIC, you have to connect DIO1 of the Ra-01H with Pin 35 of the M5Stack bus.
+
+![DIO1 Image](https://github.com/Bjoerns-TB/M5Stack-LoRa-868-Network-Tester/blob/main/images/IMG_1973.jpg "Fig 1. DIO1 solder")
 
 Payload Decoder for TTN (also compatible with TTN Mapper integration):
 
