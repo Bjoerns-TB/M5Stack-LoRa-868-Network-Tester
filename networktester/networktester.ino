@@ -1,6 +1,6 @@
 #include <M5Stack.h>				//  https://github.com/m5stack/M5Stack
 #include <M5_UI.h>					//  https://github.com/dsiberia9s/M5_UI
-#include <lmic.h>
+#include <lmic.h>           //  https://github.com/Bjoerns-TB/arduino-lmic/tree/LMIC_setLinkCheckRequestOnce
 #include <hal/hal.h>
 #include <SPI.h>
 #include "soc/timer_group_struct.h"
@@ -152,7 +152,7 @@ String UIInputbox_6nssds = "";        //No GWs for LCR
 String UITextbox_vimqus = "SF7";      //SpreadingFactor (B2)
 String UITextbox_eq79hh46 = "NACK";   //Workmode  (B1)
 String UITextbox_67ofwdh = "Dim";     //Dimming (B3)
-String UIProgressbar_eymzer = "70";   //Progressbar RSSI
+String UIProgressbar_eymzer = "0";   //Progressbar RSSI
 String UITextbox_859t1hi = "-130";    //RSSI
 String UIInputbox_awnh87 = "inactive";//Status
 String UITextbox_4t0l0bn = "0";		  //Stattelites
@@ -1172,10 +1172,20 @@ void loop() {
       UIDisable(false, &UITextbox_859t1hi);
       UIDisable(false, &UITextbox_olwwlae);
       UIDisable(false, &UITextbox_7mnuudb);
+      UISet(&UITextbox_859t1hi, "-130");
+      UISet(&UITextbox_olwwlae, "-20.0");
+      UISet(&UIProgressbar_eymzer, 0);
     } else if (iwm == 2) {
       UISet(&UITextbox_67ofwdh, "Send");
+      UISet(&UITextbox_859t1hi, "-130");
+      UISet(&UITextbox_olwwlae, "-20.0");
+      UISet(&UIProgressbar_eymzer, 0);
     } else if (iwm == 3) {
       UIDisable(false, &UIInputbox_6nssds);
+      UISet(&UITextbox_859t1hi, "-130");
+      UISet(&UITextbox_olwwlae, "-20.0");
+      UISet(&UIProgressbar_eymzer, 0);
+      UISet(&UIInputbox_6nssds, "");
     } else if (iwm == 4) {
       UIDisable(true, &UIProgressbar_eymzer);
       UIDisable(true, &UITextbox_859t1hi);
@@ -1192,6 +1202,9 @@ void loop() {
       UIDisable(false, &UIProgressbar_eymzer);
       UIDisable(false, &UITextbox_859t1hi);
       UIDisable(false, &UITextbox_olwwlae);
+      UISet(&UITextbox_859t1hi, "-130");
+      UISet(&UITextbox_olwwlae, "-20.0");
+      UISet(&UIProgressbar_eymzer, 0);
       //strip.SetPixelColor(7, off);
     } else if (iwm == 6) {
       UISet(&UITextbox_vimqus, ttext[iiv]);
