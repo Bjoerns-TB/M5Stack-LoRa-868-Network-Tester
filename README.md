@@ -134,6 +134,9 @@ Firmware version 2.1.19 of the LoRaWAN module is mandatory for OTAA to work.
   
 ## Changelog
 
+  - 30.12.2020
+    - Reset RSSI, SNR and No of GWs values on change of mode
+    
   - 29.12.2020
     - First commit
 
