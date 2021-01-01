@@ -13,7 +13,7 @@ The tester is designed to work with the following hardware:
   - [M5Stack]
   - [TinyGPSPlus]
   - [NeoPixelBus]
-  - [M5_UI]
+  - [M5_UI] - this Fork enables TTN Mapper like colours for RSSI values in the progressbar
   - [MCCI Arduino LMIC] - this Fork enables the LinkCheckRequest to get info on gateway number and margin from the backend
 
  
@@ -153,7 +153,7 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 [M5Stack]: https://github.com/m5stack/M5Stack
 [TinyGPSPlus]: https://github.com/mikalhart/TinyGPSPlus
 [NeoPixelBus]: https://github.com/Makuna/NeoPixelBus
-[M5_UI]: https://github.com/dsiberia9s/M5_UI
+[M5_UI]: https://github.com/Bjoerns-TB/M5_UI/tree/TTN-Mapper-Colours-Progressbar
 [geojson.io]: http://geojson.io/
 [M5Stack LoRa 868 Module]: https://m5stack.com/products/lora-module-868mhz
 [MCCI Arduino LMIC]: https://github.com/Bjoerns-TB/arduino-lmic/tree/LMIC_setLinkCheckRequestOnce
