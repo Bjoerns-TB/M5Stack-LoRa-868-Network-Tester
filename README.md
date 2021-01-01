@@ -133,6 +133,11 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 01.01.2021
+    - change progessbar scale 0: -130 100:-80 RSSI
+    - Display information about queued packets in LCM and OTAA mode
+    - Reset nGWs and gwMargin after mode Change
+
   - 30.12.2020
     - Reset RSSI, SNR and No of GWs values on change of mode
     
