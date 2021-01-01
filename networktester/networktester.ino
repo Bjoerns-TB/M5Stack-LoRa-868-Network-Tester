@@ -323,7 +323,7 @@ void onEvent (ev_t ev) {
         Serial.println(snr);
         Serial.println(LMIC.nGws);
         Serial.println(LMIC.gwMargin);
-        UISet(&UIProgressbar_eymzer, rssi + 130);
+        UISet(&UIProgressbar_eymzer, (rssi + 130) *2);
         UISet(&UITextbox_859t1hi, rssi);
         UISet(&UITextbox_olwwlae, charsnr);
 
@@ -725,7 +725,7 @@ void sendobject(osjob_t* j) {
     }
 #endif
 
-  } else if (iwm == 3) {    //currently no LCR, only ACK <<placeholder>>
+  } else if (iwm == 3) {
 
     UISet(&UIInputbox_awnh87, "LCR");
 
@@ -767,6 +767,7 @@ void sendobject(osjob_t* j) {
       LMIC_setLinkCheckRequestOnce(1);
       LMIC_setTxData2(1, coords, sizeof(coords) , 1);
       LMIC.txCnt = TXCONF_ATTEMPTS;
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
 #else
@@ -779,6 +780,7 @@ void sendobject(osjob_t* j) {
       next = false;
       LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
       LMIC.txCnt = TXCONF_ATTEMPTS;
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
 #endif
@@ -821,6 +823,7 @@ void sendobjectotaa(osjob_t* j) {
       next = false;
       LMIC_setTxData2(1, coords, sizeof(coords) , 0);
       LMIC.txCnt = TXCONF_ATTEMPTS;
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
   } else if (otaaack == 1) {
@@ -832,6 +835,7 @@ void sendobjectotaa(osjob_t* j) {
       next = false;
       LMIC_setTxData2(1, coords, sizeof(coords) , 1);
       LMIC.txCnt = TXCONF_ATTEMPTS;
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
   }
@@ -844,6 +848,7 @@ void sendobjectotaa(osjob_t* j) {
       // Prepare upstream data transmission at the next possible time.
       next = false;
       LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 0);
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
   } else if (otaaack == 1) {
@@ -855,6 +860,7 @@ void sendobjectotaa(osjob_t* j) {
       next = false;
       LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
       LMIC.txCnt = TXCONF_ATTEMPTS;
+      UISet(&UIInputbox_awnh87, "Queued");
       Serial.println(F("Packet queued"));
     }
   }
@@ -1187,6 +1193,8 @@ void loop() {
       UISet(&UIProgressbar_eymzer, 0);
       UISet(&UIInputbox_6nssds, "");
     } else if (iwm == 4) {
+      LMIC.nGws = 0;
+      LMIC.gwMargin = 0;
       UIDisable(true, &UIProgressbar_eymzer);
       UIDisable(true, &UITextbox_859t1hi);
       UIDisable(true, &UITextbox_olwwlae);
