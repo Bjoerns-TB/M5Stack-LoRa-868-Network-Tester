@@ -23,9 +23,11 @@ UART2 with GPIO 16 and 17 willbe used for the GPS module.
 
 Edit the lmic_project_config.h
 
-  - #define CFG_eu868 1
-  - #define CFG_sx1276_radio 1
-  - #define LMIC_USE_INTERRUPTS
+```
+  #define CFG_eu868 1
+  #define CFG_sx1276_radio 1
+  #define LMIC_USE_INTERRUPTS
+```
     
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
