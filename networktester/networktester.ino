@@ -501,6 +501,17 @@ void initlora() {
   LMIC_setSession (0x13, DEVADDR, NWKSKEY, APPSKEY);
 #endif
 
+#if defined(CFG_eu868)
+  Serial.println("Region eu868");
+  // Set up the channels used by the Things Network, which corresponds
+  // to the defaults of most gateways. Without this, only three base
+  // channels from the LoRaWAN specification are used, which certainly
+  // works, so it is good for debugging, but can overload those
+  // frequencies, so be sure to configure the full frequency range of
+  // your network here (unless your network autoconfigures them).
+  // Setting up channels should happen after LMIC_setSession, as that
+  // configures the minimal channel set. The LMIC doesn't let you change
+  // the three basic settings, but we show them here.
   LMIC_setupChannel(0, 868100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(1, 868300000, DR_RANGE_MAP(DR_SF12, DR_SF7B), BAND_CENTI);      // g-band
   LMIC_setupChannel(2, 868500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
@@ -510,7 +521,48 @@ void initlora() {
   LMIC_setupChannel(6, 867700000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
+  // TTN defines an additional channel at 869.525Mhz using SF9 for class B
+  // devices' ping slots. LMIC does not have an easy way to define set this
+  // frequency and support for class B is spotty and untested, so this
+  // frequency is not configured here.
+#elif defined(CFG_us915) || defined(CFG_au915)
+  Serial.println("Region us915/au915");
+  // NA-US and AU channels 0-71 are configured automatically
+  // but only one group of 8 should (a subband) should be active
+  // TTN recommends the second sub band, 1 in a zero based count.
+  // https://github.com/TheThingsNetwork/gateway-conf/blob/master/US-global_conf.json
+  LMIC_selectSubBand(1);
+#elif defined(CFG_as923)
+  Serial.println("Region as923");
+  // Set up the channels used in your country. Only two are defined by default,
+  // and they cannot be changed.  Use BAND_CENTI to indicate 1% duty cycle.
+  // LMIC_setupChannel(0, 923200000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);
+  // LMIC_setupChannel(1, 923400000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);
 
+  // ... extra definitions for channels 2..n here
+#elif defined(CFG_kr920)
+  Serial.println("Region kr920");
+  // Set up the channels used in your country. Three are defined by default,
+  // and they cannot be changed. Duty cycle doesn't matter, but is conventionally
+  // BAND_MILLI.
+  // LMIC_setupChannel(0, 922100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(1, 922300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(2, 922500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+
+  // ... extra definitions for channels 3..n here.
+#elif defined(CFG_in866)
+  Serial.println("Region in866");
+  // Set up the channels used in your country. Three are defined by default,
+  // and they cannot be changed. Duty cycle doesn't matter, but is conventionally
+  // BAND_MILLI.
+  // LMIC_setupChannel(0, 865062500, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(1, 865402500, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(2, 865985000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+
+  // ... extra definitions for channels 3..n here.
+#else
+# error Region not supported
+#endif
 
   // Disable link check validation
   LMIC_setLinkCheckMode(0);
@@ -547,6 +599,17 @@ void initloraabp() {
   LMIC_setSession (0x13, DEVADDR, NWKSKEY, APPSKEY);
 #endif
 
+#if defined(CFG_eu868)
+  Serial.println("Region eu868");
+  // Set up the channels used by the Things Network, which corresponds
+  // to the defaults of most gateways. Without this, only three base
+  // channels from the LoRaWAN specification are used, which certainly
+  // works, so it is good for debugging, but can overload those
+  // frequencies, so be sure to configure the full frequency range of
+  // your network here (unless your network autoconfigures them).
+  // Setting up channels should happen after LMIC_setSession, as that
+  // configures the minimal channel set. The LMIC doesn't let you change
+  // the three basic settings, but we show them here.
   LMIC_setupChannel(0, 868100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(1, 868300000, DR_RANGE_MAP(DR_SF12, DR_SF7B), BAND_CENTI);      // g-band
   LMIC_setupChannel(2, 868500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
@@ -556,6 +619,48 @@ void initloraabp() {
   LMIC_setupChannel(6, 867700000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(7, 867900000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);      // g-band
   LMIC_setupChannel(8, 868800000, DR_RANGE_MAP(DR_FSK,  DR_FSK),  BAND_MILLI);      // g2-band
+  // TTN defines an additional channel at 869.525Mhz using SF9 for class B
+  // devices' ping slots. LMIC does not have an easy way to define set this
+  // frequency and support for class B is spotty and untested, so this
+  // frequency is not configured here.
+#elif defined(CFG_us915) || defined(CFG_au915)
+  Serial.println("Region us915/au915");
+  // NA-US and AU channels 0-71 are configured automatically
+  // but only one group of 8 should (a subband) should be active
+  // TTN recommends the second sub band, 1 in a zero based count.
+  // https://github.com/TheThingsNetwork/gateway-conf/blob/master/US-global_conf.json
+  LMIC_selectSubBand(1);
+#elif defined(CFG_as923)
+  Serial.println("Region as923");
+  // Set up the channels used in your country. Only two are defined by default,
+  // and they cannot be changed.  Use BAND_CENTI to indicate 1% duty cycle.
+  // LMIC_setupChannel(0, 923200000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);
+  // LMIC_setupChannel(1, 923400000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_CENTI);
+
+  // ... extra definitions for channels 2..n here
+#elif defined(CFG_kr920)
+  Serial.println("Region kr920");
+  // Set up the channels used in your country. Three are defined by default,
+  // and they cannot be changed. Duty cycle doesn't matter, but is conventionally
+  // BAND_MILLI.
+  // LMIC_setupChannel(0, 922100000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(1, 922300000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(2, 922500000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+
+  // ... extra definitions for channels 3..n here.
+#elif defined(CFG_in866)
+  Serial.println("Region in866");
+  // Set up the channels used in your country. Three are defined by default,
+  // and they cannot be changed. Duty cycle doesn't matter, but is conventionally
+  // BAND_MILLI.
+  // LMIC_setupChannel(0, 865062500, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(1, 865402500, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+  // LMIC_setupChannel(2, 865985000, DR_RANGE_MAP(DR_SF12, DR_SF7),  BAND_MILLI);
+
+  // ... extra definitions for channels 3..n here.
+#else
+# error Region not supported
+#endif
 
   // Disable link check validation
   LMIC_setLinkCheckMode(0);
