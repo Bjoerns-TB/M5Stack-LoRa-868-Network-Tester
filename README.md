@@ -133,6 +133,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 03.01.2021
+    - Allow different regions in ABP mode
+
   - 01.01.2021
     - change progessbar scale 0: -130 100:-80 RSSI
     - Display information about queued packets in LCM and OTAA mode
@@ -157,5 +160,3 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 [geojson.io]: http://geojson.io/
 [M5Stack LoRa 868 Module]: https://m5stack.com/products/lora-module-868mhz
 [MCCI Arduino LMIC]: https://github.com/Bjoerns-TB/arduino-lmic/tree/LMIC_setLinkCheckRequestOnce
-
-
