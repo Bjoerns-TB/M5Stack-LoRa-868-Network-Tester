@@ -135,6 +135,10 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 04.01.2021
+    - play beep on ACK received
+    - reset counters on no ACK received
+
   - 03.01.2021
     - Allow different regions in ABP mode
 
