@@ -311,7 +311,8 @@ void onEvent (ev_t ev) {
         UISet(&UIInputbox_awnh87, txcnt);
       }
       if (LMIC.txrxFlags & TXRX_ACK) {
-        Serial.println(F("Received ack"));
+        Serial.println(F("Received ack
+        M5.Speaker.beep();
 
         rssi = LMIC.rssi - 64;
         Serial.println(F("RSSI "));
