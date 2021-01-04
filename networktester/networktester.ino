@@ -350,7 +350,12 @@ void onEvent (ev_t ev) {
           strip.SetPixelColor(7, red);
         }
 #endif
-
+      }
+      if (LMIC.txrxFlags & TXRX_NACK) {
+        Serial.println(F("No ACK received "));
+        UISet(&UITextbox_859t1hi, "-130");
+        UISet(&UITextbox_olwwlae, "-20.0");
+        UISet(&UIProgressbar_eymzer, 0);
       }
       if (LMIC.dataLen) {
         Serial.println(F("Received "));
