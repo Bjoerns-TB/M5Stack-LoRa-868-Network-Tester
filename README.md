@@ -136,7 +136,7 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 ## Changelog
 
   - 04.01.2021
-    - play beep on ACK received
+    - play beep on ACK received in ACK mode
     - reset counters on no ACK received
 
   - 03.01.2021
