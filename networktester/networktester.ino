@@ -312,8 +312,9 @@ void onEvent (ev_t ev) {
       }
       if (LMIC.txrxFlags & TXRX_ACK) {
         Serial.println(F("Received ack"));
-        M5.Speaker.beep();
-
+        if (iwm == 1){
+          M5.Speaker.beep();
+        }
         rssi = LMIC.rssi - 64;
         Serial.println(F("RSSI "));
         Serial.println(rssi);
@@ -356,6 +357,7 @@ void onEvent (ev_t ev) {
         UISet(&UITextbox_859t1hi, "-130");
         UISet(&UITextbox_olwwlae, "-20.0");
         UISet(&UIProgressbar_eymzer, 0);
+        UISet(&UIInputbox_6nssds, "");          
       }
       if (LMIC.dataLen) {
         Serial.println(F("Received "));
