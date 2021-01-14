@@ -132,6 +132,10 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   - Sometimes, if an ACK is not received, the node tries to resend the last message multiple times. This will interfer with other jobs. Retries are turned of, but sometimes happen.
   - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 120 seconds.
   
+
+## Accesories
+  - Michael designed a [Case]. Thank you!
+  
   
 ## Changelog
 
@@ -166,3 +170,4 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 [geojson.io]: http://geojson.io/
 [M5Stack LoRa 868 Module]: https://m5stack.com/products/lora-module-868mhz
 [MCCI Arduino LMIC]: https://github.com/Bjoerns-TB/arduino-lmic/tree/LMIC_setLinkCheckRequestOnce
+[Case]: https://www.thingiverse.com/thing:4706335
