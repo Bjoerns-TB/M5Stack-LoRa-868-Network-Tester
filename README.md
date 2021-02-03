@@ -148,7 +148,7 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 
   - 03.02.2021
     - fix periodic transmissions in OTAA mode
-    - write and read framecounter from sd card; display send packet based on LMIC framecounter (reversible)
+    - write and read framecounter from sd card; display sent packet based on LMIC framecounter (reversible)
 
   - 04.01.2021
     - play beep on ACK received in ACK mode
