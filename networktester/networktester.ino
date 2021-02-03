@@ -999,9 +999,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
-
   ssvresult += "5";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
@@ -1013,9 +1015,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
-
   ssvresult += "4";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
@@ -1027,8 +1031,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
   ssvresult += "3";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
@@ -1040,8 +1047,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
   ssvresult += "2";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
@@ -1053,8 +1063,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
   ssvresult += "1";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
@@ -1066,8 +1079,11 @@ void ssv() {
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
+	
+  if (next == true){
   writessv();
   ssvresult += "0";
+  }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
