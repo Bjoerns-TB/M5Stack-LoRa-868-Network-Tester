@@ -59,6 +59,13 @@ function Decoder(b, port) {
 }
 ```
 
+To be compliant with the TTN Stack V3, the Frame Counter is now stored on the SD card, so an inserted card is now mandatory. The sent counter displays the sent packet based on the Frame Counter. Thic can be reverted to the previous behaviour by changeing the follwing lines:
+
+```
+//txcnt = String("Sent " + String(cnt));
+txcnt = String("Sent " + String(LMIC.seqnoUp - 1));
+```
+
 ## Instructions for Use
 
 #### Menu
@@ -138,6 +145,10 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
   
 ## Changelog
+
+  - 03.02.2021
+    - fix periodic transmissions in OTAA mode
+    - write and read framecounter from sd card; display send packet based on LMIC framecounter (reversible)
 
   - 04.01.2021
     - play beep on ACK received in ACK mode
