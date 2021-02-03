@@ -76,6 +76,8 @@ int otaaack = 0;
 static osjob_t sendjob;
 bool next = true;
 int margin;
+char counterfile[] = "/framecounter.txt";
+long framecounter = 0;
 
 //LoRaWAN ABP
 // LoRaWAN NwkSKey, network session key
@@ -146,6 +148,7 @@ String ssvresult = "DR ";
 //M5Stack
 bool dim = false;
 RTC_DATA_ATTR bool powersave = false;
+					
 
 /* RootVar's for UI elements (note: not edit manually) */
 String UIInputbox_6nssds = "";        //No GWs for LCR
@@ -288,6 +291,7 @@ void onEvent (ev_t ev) {
     case EV_JOINED:
       Serial.println(F("EV_JOINED"));
       UISet(&UIInputbox_awnh87, "Joined");
+				  
       break;
     /*
       || This event is defined but not used in the code. No
@@ -307,25 +311,19 @@ void onEvent (ev_t ev) {
       Serial.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
       cnt++;
       if (iwm != 4) {
-        txcnt = String("Sent " + String(cnt));
+        //txcnt = String("Sent " + String(cnt));
+        txcnt = String("Sent " + String(LMIC.seqnoUp - 1));
         UISet(&UIInputbox_awnh87, txcnt);
       }
       if (LMIC.txrxFlags & TXRX_ACK) {
         Serial.println(F("Received ack"));
-        if (iwm == 1){
+        if (iwm == 1) {
           M5.Speaker.beep();
         }
         rssi = LMIC.rssi - 64;
-        Serial.println(F("RSSI "));
-        Serial.println(rssi);
-
         snr = LMIC.snr * 0.25;
         dtostrf(snr, 5, 1, charsnr);
-        Serial.println(F("SNR "));
-        Serial.println(snr);
-        Serial.println(LMIC.nGws);
-        Serial.println(LMIC.gwMargin);
-        UISet(&UIProgressbar_eymzer, (rssi + 130) *2);
+        UISet(&UIProgressbar_eymzer, (rssi + 130) * 2);
         UISet(&UITextbox_859t1hi, rssi);
         UISet(&UITextbox_olwwlae, charsnr);
 
@@ -351,7 +349,9 @@ void onEvent (ev_t ev) {
           strip.SetPixelColor(7, red);
         }
 #endif
+
       }
+
       if (LMIC.txrxFlags & TXRX_NACK) {
         Serial.println(F("No ACK received "));
         UISet(&UITextbox_859t1hi, "-130");
@@ -359,6 +359,7 @@ void onEvent (ev_t ev) {
         UISet(&UIProgressbar_eymzer, 0);
         UISet(&UIInputbox_6nssds, "");          
       }
+
       if (LMIC.dataLen) {
         Serial.println(F("Received "));
         Serial.println(LMIC.dataLen);
@@ -582,6 +583,8 @@ void initlora() {
   LMIC_setDrTxpow(DR_SF7, 14);
 
   LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+
+  frcntinit();
 }
 
 //Settings for LoRaWAN ABP
@@ -682,6 +685,7 @@ void initloraabp() {
   LMIC_setDrTxpow(DR_SF7, 14);
   otaa = 0;
   cnt = -1;
+  frcntinit();
 }
 
 //Settings for LoRaWAN OTAA
@@ -699,14 +703,14 @@ void initloraotaa() {
   next = false;
   LMIC_startJoining();
   UISet(&UIInputbox_awnh87, "Joining");
-  //  UISet(&UIInputbox_awnh87, "Joined");
   otaa = 1;
   cnt = -1;
 }
 
 //Send data using LoRaWAN
 void sendobject(osjob_t* j) {
-  bool result = false;
+
+			
 
   int32_t lat = latitude * 10000;
   int32_t lon = longitude * 10000;
@@ -897,12 +901,11 @@ void sendobject(osjob_t* j) {
       Serial.println(F("Packet queued"));
     }
 #endif
+			  
   }
 }
 
 void sendobjectotaa(osjob_t* j) {
-
-  bool result = false;
 
   int32_t lat = latitude * 10000;
   int32_t lon = longitude * 10000;
@@ -987,7 +990,6 @@ void ssv() {
   UISet(&UIInputbox_awnh87, "SSV running");
   ssvinit();
 
-  bool result = false;
   ssvresult = "DR ";
 
   LMIC_setDrTxpow(DR_SF7, 14);
@@ -1164,6 +1166,42 @@ void lmictask( void * parameter ) {
   }
 }
 
+			  
+							   
+							 
+									
+								  
+ 
+
+//init SD card for frame counter
+void frcntinit() {
+  if (cardin == true) {
+    if (!SD.exists(counterfile)) {
+      dataFile = SD.open(counterfile, FILE_WRITE);
+      dataFile.print(F("0"));
+      dataFile.close();
+    } else {
+      dataFile = SD.open(counterfile);
+      framecounter = dataFile.parseInt();
+      //Serial.println(framecounter);
+      dataFile.close();
+      LMIC.seqnoUp = framecounter;
+      //Serial.println(LMIC.seqnoUp);
+    }
+  }
+}
+
+//Write frame counter to sd card for ABP mode, to be compliant with LoRaWAN and TTN Stack V3. Only updates if framecounter changed.
+void frcnt() {
+  if (cardin == true) {
+    if (framecounter != LMIC.seqnoUp) {
+      framecounter = LMIC.seqnoUp;
+      dataFile = SD.open(counterfile, FILE_WRITE);
+      dataFile.println(framecounter);
+      dataFile.close();
+    }
+  }
+}
 
 //initial setup
 void setup() {
@@ -1177,6 +1215,12 @@ void setup() {
   M5.Lcd.setBrightness(50);
   //M5.Lcd.drawBitmap(0, 0, 320, 240, (uint16_t *)imgName);
   M5.Lcd.drawBitmap(0, 0, 320, 240, (uint16_t *)gImage_logoM5);
+  smartDelay(2000);
+
+  if (SD.exists(filename)) {
+    cardin = true;
+  }
+
   initlora();
 
   xTaskCreatePinnedToCore(
@@ -1459,7 +1503,10 @@ void loop() {
   if (next == false) {
 
   } else {
-
+    if (otaa == 0) {
+      //Update Frame Counter for ABP mode
+      frcnt();
+    }
     //Sending intervall
     currentMillis = millis();
     if ((currentMillis - sentMillis > interval[iiv]) && iwm < 2) {
