@@ -291,7 +291,7 @@ void onEvent (ev_t ev) {
     case EV_JOINED:
       Serial.println(F("EV_JOINED"));
       UISet(&UIInputbox_awnh87, "Joined");
-				  
+      next = true;			  
       break;
     /*
       || This event is defined but not used in the code. No
