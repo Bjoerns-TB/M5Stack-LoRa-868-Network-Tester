@@ -75,6 +75,7 @@ int otaa = 0;
 int otaaack = 0;
 static osjob_t sendjob;
 bool next = true;
+bool ackrx = false;
 int margin;
 char counterfile[] = "/framecounter.txt";
 long framecounter = 0;
@@ -317,6 +318,7 @@ void onEvent (ev_t ev) {
       }
       if (LMIC.txrxFlags & TXRX_ACK) {
         Serial.println(F("Received ack"));
+	ackrx = true;
         if (iwm == 1) {
           M5.Speaker.beep();
         }
@@ -354,6 +356,7 @@ void onEvent (ev_t ev) {
 
       if (LMIC.txrxFlags & TXRX_NACK) {
         Serial.println(F("No ACK received "));
+	ackrx = false;
         UISet(&UITextbox_859t1hi, "-130");
         UISet(&UITextbox_olwwlae, "-20.0");
         UISet(&UIProgressbar_eymzer, 0);
@@ -1000,9 +1003,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "5";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1016,9 +1020,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "4";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1032,9 +1037,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "3";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1048,9 +1054,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "2";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1064,9 +1071,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "1";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1080,9 +1088,10 @@ void ssv() {
   LMIC.txCnt = TXCONF_ATTEMPTS;
   smartDelay(5000);
 	
-  if (next == true){
+  if (ackrx == true){
   writessv();
   ssvresult += "0";
+  ackrx = false;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
