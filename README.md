@@ -146,6 +146,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 05.02.2021
+    - fix SSV mode data save and display
+
   - 03.02.2021
     - fix periodic transmissions in OTAA mode
     - write and read framecounter from sd card; display sent packet based on LMIC framecounter (reversible)
