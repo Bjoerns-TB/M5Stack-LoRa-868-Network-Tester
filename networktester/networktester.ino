@@ -45,7 +45,7 @@ static const uint32_t GPSBaud = 9600;
 TinyGPSPlus gps;
 HardwareSerial serialgps(2);
 #endif
-float latitude, longitude, hdop, alt, hdop2;
+float latitude, longitude, latitude2, longitude2,hdop, alt, hdop2;
 int sats;
 
 
@@ -150,7 +150,6 @@ String ssvresult = "DR ";
 bool dim = false;
 RTC_DATA_ATTR bool powersave = false;
 					
-
 /* RootVar's for UI elements (note: not edit manually) */
 String UIInputbox_6nssds = "";        //No GWs for LCR
 String UITextbox_vimqus = "SF7";      //SpreadingFactor (B2)
@@ -990,6 +989,11 @@ void sendobjectotaa(osjob_t* j) {
 //SiteSurvey function
 void ssv() {
 
+  latitude2 = latitude;
+  longitude2 = longitude;
+  bool ack710 = false;
+  bool ackok = false;
+
   UISet(&UIInputbox_awnh87, "SSV running");
   ssvinit();
 
@@ -1000,13 +1004,18 @@ void ssv() {
   LMIC_setLinkCheckRequestOnce(1);
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
+  UISet(&UIInputbox_awnh87, "Queued");
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "5";
-  ackrx = false;
+  while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    writessv();
+    ssvresult += "5";
+    ackrx = false;
+    ack710 = true;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1018,12 +1027,16 @@ void ssv() {
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "4";
-  ackrx = false;
+  while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    writessv();
+    ssvresult += "4";
+    ackrx = false;
+    ack710 = true;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1035,12 +1048,16 @@ void ssv() {
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "3";
-  ackrx = false;
+  while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    writessv();
+    ssvresult += "3";
+    ackrx = false;
+    ack710 = true;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1052,12 +1069,16 @@ void ssv() {
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "2";
-  ackrx = false;
+    while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    writessv();
+    ssvresult += "2";
+    ackrx = false;
+    ack710 = true;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1069,12 +1090,19 @@ void ssv() {
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "1";
-  ackrx = false;
+  while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    if (ack710 == true) {
+      writessv();
+    } else {
+      writessvy();
+    }
+    ssvresult += "1";
+    ackrx = false;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
@@ -1086,20 +1114,36 @@ void ssv() {
   next = false;
   LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
-  smartDelay(5000);
-	
-  if (ackrx == true){
-  writessv();
-  ssvresult += "0";
-  ackrx = false;
+  while (next == false){
+    smartDelay(5000);
+  }
+
+  if (ackrx == true) {
+    if (ack710 == true) {
+      writessv();
+    } else {
+      writessvy();
+    }
+    ssvresult += "0";
+    ackrx = false;
+    ackok = true;
   }
 
   LMIC.bands[BAND_MILLI].avail = os_getTime();
   LMIC.bands[BAND_CENTI].avail = os_getTime();
   LMIC.bands[BAND_DECI].avail = os_getTime();
 
+  if (ackok == false) {
+    rssi = 0;
+    snr = 0;
+    gwcnt = 0;
+    margin = 0;
+    writessvr();
+  }
+
   lastssv = true;
   writessv();
+
   lastssv = false;
   firstssv = false;
 
@@ -1123,7 +1167,7 @@ void ssvinit() {
   }
 }
 
-//Write data to GeoJSON file
+//Write data to GeoJSON file - green colour
 void writessv() {
   if (gps.location.isValid() == true) {
     gpsdata();
@@ -1165,9 +1209,9 @@ void writessv() {
       dataFile.println(F("\"geometry\": {"));
       dataFile.println(F("\"type\": \"Point\","));
       dataFile.print(F("\"coordinates\": ["));
-      dataFile.print(longitude, 7);
+      dataFile.print(longitude2, 7);
       dataFile.print(F(", "));
-      dataFile.print(latitude, 7);
+      dataFile.print(latitude2, 7);
       dataFile.print(F("]\r\n"));
       dataFile.println(F("}"));
       dataFile.println(F("}"));
@@ -1178,6 +1222,119 @@ void writessv() {
     }
   }
 }
+
+//Write data to GeoJSON file - yellow colour
+void writessvy() {
+  if (gps.location.isValid() == true) {
+    gpsdata();
+    sprintf(date1, "%4d-%02d-%02dT%02d:%02d:%02dZ", year, month, day, hour, minute, second);
+
+    dataFile = SD.open(filepath2, FILE_WRITE);
+    unsigned long filesize = dataFile.size();
+    dataFile.seek(filesize);
+
+    if (lastssv == false) {
+      if (firstssv == false) {
+        firstssv = true;
+        dataFile.println(F("{"));
+        dataFile.println(F("\"type\": \"FeatureCollection\","));
+        dataFile.println(F("\"features\": [{"));
+      } else {
+        dataFile.println(F(",{"));
+      }
+      dataFile.println(F("\"type\": \"Feature\","));
+      dataFile.println(F("\"properties\": {"));
+      dataFile.print(F("\"sf\": \""));
+      dataFile.print(sf[isf]);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"rssi\": \""));
+      dataFile.print(rssi);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"snr\": \""));
+      dataFile.print(snr);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"gwcnt\": \""));
+      dataFile.print(gwcnt);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"margin\": \""));
+      dataFile.print(margin);
+      dataFile.print(F("\",\r\n"));
+      dataFile.println(F("\"marker-color\": \"#888800\","));
+      dataFile.println(F("\"marker-symbol\": \"lighthouse\""));
+      dataFile.println(F("},"));
+      dataFile.println(F("\"geometry\": {"));
+      dataFile.println(F("\"type\": \"Point\","));
+      dataFile.print(F("\"coordinates\": ["));
+      dataFile.print(longitude2, 7);
+      dataFile.print(F(", "));
+      dataFile.print(latitude2, 7);
+      dataFile.print(F("]\r\n"));
+      dataFile.println(F("}"));
+      dataFile.println(F("}"));
+      dataFile.close();
+    } else {
+      dataFile.println(F("]}"));
+      dataFile.close();
+    }
+  }
+}
+
+//Write data to GeoJSON file - red colour
+void writessvr() {
+  if (gps.location.isValid() == true) {
+    gpsdata();
+    sprintf(date1, "%4d-%02d-%02dT%02d:%02d:%02dZ", year, month, day, hour, minute, second);
+
+    dataFile = SD.open(filepath2, FILE_WRITE);
+    unsigned long filesize = dataFile.size();
+    dataFile.seek(filesize);
+
+    if (lastssv == false) {
+      if (firstssv == false) {
+        firstssv = true;
+        dataFile.println(F("{"));
+        dataFile.println(F("\"type\": \"FeatureCollection\","));
+        dataFile.println(F("\"features\": [{"));
+      } else {
+        dataFile.println(F(",{"));
+      }
+      dataFile.println(F("\"type\": \"Feature\","));
+      dataFile.println(F("\"properties\": {"));
+      dataFile.print(F("\"sf\": \""));
+      dataFile.print(sf[isf]);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"rssi\": \""));
+      dataFile.print(rssi);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"snr\": \""));
+      dataFile.print(snr);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"gwcnt\": \""));
+      dataFile.print(gwcnt);
+      dataFile.print(F("\",\r\n"));
+      dataFile.print(F("\"margin\": \""));
+      dataFile.print(margin);
+      dataFile.print(F("\",\r\n"));
+      dataFile.println(F("\"marker-color\": \"#880000\","));
+      dataFile.println(F("\"marker-symbol\": \"lighthouse\""));
+      dataFile.println(F("},"));
+      dataFile.println(F("\"geometry\": {"));
+      dataFile.println(F("\"type\": \"Point\","));
+      dataFile.print(F("\"coordinates\": ["));
+      dataFile.print(longitude2, 7);
+      dataFile.print(F(", "));
+      dataFile.print(latitude2, 7);
+      dataFile.print(F("]\r\n"));
+      dataFile.println(F("}"));
+      dataFile.println(F("}"));
+      dataFile.close();
+    } else {
+      dataFile.println(F("]}"));
+      dataFile.close();
+    }
+  }
+}
+
 #endif
 
 // Manage LoRa communication
