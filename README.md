@@ -146,6 +146,11 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 07.02.2021
+    - fix SSV mode on fast retry
+    - in SSV mode save yellow lighthouse when only reception of ACK with SF11 and/or SF12
+    - in SSV mode save red lighthouse when no ACK is received
+
   - 05.02.2021
     - fix SSV mode data save and display
 
