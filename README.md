@@ -137,7 +137,8 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Known Bugs
   - Sometimes, if an ACK is not received, the node tries to resend the last message multiple times. This will interfer with other jobs. Retries are turned of, but sometimes happen.
-  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 120 seconds.
+  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 150 seconds.
+  - After an completed SSV cycle the node will send an unwanted empty uplink after about 150 seconds, dispaly will show "sending", normal operation still possible
   
 
 ## Accesories
