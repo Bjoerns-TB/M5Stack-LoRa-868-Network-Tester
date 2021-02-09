@@ -45,7 +45,7 @@ static const uint32_t GPSBaud = 9600;
 TinyGPSPlus gps;
 HardwareSerial serialgps(2);
 #endif
-float latitude, longitude, latitude2, longitude2,hdop, alt, hdop2;
+float latitude, longitude, latitude2, longitude2, hdop, alt, hdop2;
 int sats;
 
 
@@ -574,6 +574,9 @@ void initlora() {
 #else
 # error Region not supported
 #endif
+	
+  //Disable Adaptive Data Rate
+  LMIC_setAdrMode(0);
 
   // Disable link check validation
   LMIC_setLinkCheckMode(0);
@@ -674,6 +677,9 @@ void initloraabp() {
 #else
 # error Region not supported
 #endif
+	
+  //Disable Adaptive Data Rate
+  LMIC_setAdrMode(0);
 
   // Disable link check validation
   LMIC_setLinkCheckMode(0);
@@ -1003,8 +1009,8 @@ void ssv() {
   isf = 0;
   LMIC_setLinkCheckRequestOnce(1);
   next = false;
-  LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   UISet(&UIInputbox_awnh87, "Queued");
+  LMIC_setTxData2(1, ncoords, sizeof(ncoords) , 1);
   LMIC.txCnt = TXCONF_ATTEMPTS;
   while (next == false){
     smartDelay(5000);
