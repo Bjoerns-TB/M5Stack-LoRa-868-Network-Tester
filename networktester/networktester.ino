@@ -1157,6 +1157,7 @@ void ssv() {
 
   LMIC_setDrTxpow(DR_SF7, 14);
   isf = 0;
+  UISet(&UITextbox_vimqus, sf[isf]);
 }
 
 //Initialize GeoJSON file
