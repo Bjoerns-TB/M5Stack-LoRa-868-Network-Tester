@@ -135,10 +135,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   - Periodic transmission will only work with a valid GPS fix and an GPS age below 2 seconds
   
   
-## Known Bugs
+## Known Bugs/Limitations
   - Sometimes, if an ACK is not received, the node tries to resend the last message multiple times. This will interfer with other jobs. Retries are turned of, but sometimes happen.
-  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 150 seconds.
-  - After an completed SSV cycle the node will send an unwanted empty uplink after about 150 seconds, dispaly will show "sending", normal operation still possible
+  - When SSV mode ist left, the Duty Cycle limit is activated. So the next transfer will wait about 150 seconds. Status will display "Queued".
   
 
 ## Accesories
@@ -146,6 +145,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
   
 ## Changelog
+
+  - 09.02.2021
+    - disabled ADR in ABP mode; this removed unwanted ADR related uplinks 
 
   - 07.02.2021
     - fix SSV mode on fast retry
