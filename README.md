@@ -146,6 +146,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 17.02.2021
+    - Replace drawBitmap by pushImage for corrected colours
+
   - 09.02.2021
     - disabled ADR in ABP mode; this removed unwanted ADR related uplinks 
 
