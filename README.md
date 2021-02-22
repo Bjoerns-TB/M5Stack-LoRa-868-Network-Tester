@@ -6,7 +6,7 @@ A LoRaWAN Network Tester based on the M5Stack for the LoRa 868 module, compatibl
 The tester is designed to work with the following hardware:
   - M5Core (Basic, Gray or Fire)
   - M5Go Base (optional)
-  - M5Stack GPS Module (optional)
+  - M5Stack GPS Module or Mini GPS/BDS Unit (optional)
   - [M5Stack LoRa 868 Module]
 
 #### Required Libraries!
