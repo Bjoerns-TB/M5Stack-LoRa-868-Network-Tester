@@ -2,6 +2,10 @@
 
 A LoRaWAN Network Tester based on the M5Stack for the LoRa 868 module, compatible with TTN (The Things Network)
 
+[Version for LoRaWAN Module]
+
+[Version for COM.LoRaWAN Module]
+
 ## Setup
 The tester is designed to work with the following hardware:
   - M5Core (Basic, Gray or Fire)
@@ -196,3 +200,5 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 [M5Stack LoRa 868 Module]: https://m5stack.com/products/lora-module-868mhz
 [MCCI Arduino LMIC]: https://github.com/Bjoerns-TB/arduino-lmic/tree/LMIC_setLinkCheckRequestOnce
 [Case]: https://www.thingiverse.com/thing:4706335
+[Version for COM.LoRaWAN Module]: https://github.com/Bjoerns-TB/M5Stack-COM-LoRaWAN-Network-Tester
+[Version for LoRaWAN Module]: https://github.com/Bjoerns-TB/M5Stack-LoRaWAN-Network-Tester
