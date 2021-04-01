@@ -152,6 +152,11 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 01.04.2021
+    - Corrected the Instructions for connecting DIO1 to M5Bus
+    - Updated Pin Mapping
+    - Updated lmic_project_config
+
   - 17.02.2021
     - Replace drawBitmap by pushImage for corrected colours
 
