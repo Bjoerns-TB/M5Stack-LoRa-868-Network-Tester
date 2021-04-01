@@ -35,9 +35,12 @@ Edit the lmic_project_config.h
 By commenting out #define M5go it is possible to disable the M5GO Base. This will disable all NeoPixel related code and features.
 By commenting out #define M5gps ist is possible to disable the M5GPS module. This will disable all GPS related code and features. 
   
-Change the your TTN keys under //LoRaWAN ABP and //LoRaWAN OTAA in the networktester.ino file. If you want yo use OTAA you have to register a second device for your application. 
+Change the your TTN keys under //LoRaWAN ABP and //LoRaWAN OTAA in the networktester.ino file. If you want yo use OTAA mode you have to register a second device for your application. Only the OTAA mode uses OTAA, all other modes use ABP.
 
 In oder to make the LoRa 868 module work with LMIC, you have to connect DIO1 of the Ra-01H with Pin 35 of the M5Stack bus.
+
+**An older picture showed that i connected DIO1 to PIN 35 via two solder pads next to the M5Bus connector. With this i connected DIO0 with DIO1 and Pin 35 and 36,  which was not intended. With the solderpads it is possible to connect DIO0 to PIN 35 or PIN 34 with an 0 Ohm resistor (same for 25/26 and RST), so the right pads are both connected to DIO1. Please use only the left solderpad or better directly the M5Bus connector, as shown in the picture. With this change the #define LMIC_USE_INTERRUPTS in lmic_project_config is obsolete. Furthermore the pin mapping has also changed. Please notice that there are two versions of LoRa 868 modules (before and after december 2020 with different pin mapping). (Thanks to Andreas D. for the appointment).
+Sorry for any problems.**
 
 ![DIO1 Image](https://github.com/Bjoerns-TB/M5Stack-LoRa-868-Network-Tester/blob/main/images/IMG_2434.jpg "Fig 1. DIO1 solder")
 
