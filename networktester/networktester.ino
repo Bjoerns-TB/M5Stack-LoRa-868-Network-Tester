@@ -259,13 +259,21 @@ static void pixelupdate(void * pcParameters)
 }
 #endif
 
-// Pin mapping
+// Pin mapping for modules from december 2020
 const lmic_pinmap lmic_pins = {
   .nss = 5,                       
   .rxtx = LMIC_UNUSED_PIN,
-  .rst = 36,                       
-  .dio = {26, 35, LMIC_UNUSED_PIN}, 
+  .rst = 26,                       
+  .dio = {36, 35, LMIC_UNUSED_PIN}, 
 };
+
+// Pin mapping for modules before december 2020
+//const lmic_pinmap lmic_pins = {
+//  .nss = 5,                       
+//  .rxtx = LMIC_UNUSED_PIN,
+//  .rst = 26,                       
+//  .dio = {36, 35, LMIC_UNUSED_PIN}, 
+//};
 
 
 void onEvent (ev_t ev) {
