@@ -339,7 +339,7 @@ void onEvent (ev_t ev) {
         if ((iwm == 3) || (iwm == 4)) {
 
           gwcnt = LMIC.nGws;
-          margin = LMIC.gwMargin - 64;
+          margin = LMIC.gwMargin -7.5 - (isf * 2.5);
           UISet(&UIInputbox_6nssds, gwcnt);
         }
 
@@ -1215,7 +1215,7 @@ void writessv() {
       dataFile.print(F("\"gwcnt\": \""));
       dataFile.print(gwcnt);
       dataFile.print(F("\",\r\n"));
-      dataFile.print(F("\"margin\": \""));
+      dataFile.print(F("\"ulsnr\": \""));
       dataFile.print(margin);
       dataFile.print(F("\",\r\n"));
       dataFile.println(F("\"marker-color\": \"#008800\","));
@@ -1271,7 +1271,7 @@ void writessvy() {
       dataFile.print(F("\"gwcnt\": \""));
       dataFile.print(gwcnt);
       dataFile.print(F("\",\r\n"));
-      dataFile.print(F("\"margin\": \""));
+      dataFile.print(F("\"ulsnr\": \""));
       dataFile.print(margin);
       dataFile.print(F("\",\r\n"));
       dataFile.println(F("\"marker-color\": \"#888800\","));
@@ -1327,7 +1327,7 @@ void writessvr() {
       dataFile.print(F("\"gwcnt\": \""));
       dataFile.print(gwcnt);
       dataFile.print(F("\",\r\n"));
-      dataFile.print(F("\"margin\": \""));
+      dataFile.print(F("\"ulsnr\": \""));
       dataFile.print(margin);
       dataFile.print(F("\",\r\n"));
       dataFile.println(F("\"marker-color\": \"#880000\","));
