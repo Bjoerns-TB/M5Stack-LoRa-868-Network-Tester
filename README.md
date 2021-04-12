@@ -155,6 +155,7 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   - 12.04.2021
     - remove old margin calculation (completely wrong)  
     - calculate the uplink SNR based on the margin in SSV Mode, save UL SNR in SSV file
+    - In LCM mode the uplink SNR will be displayed next to the gateway count
 
   - 01.04.2021
     - Corrected the Instructions for connecting DIO1 to M5Bus
@@ -201,7 +202,6 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
 ## ToDo
   - create tasks for M5UI
   - improve powersave features (GPS module)
-  - display margin/UL SNR in LCM mode
 
 
 [M5Stack]: https://github.com/m5stack/M5Stack
