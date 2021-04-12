@@ -340,7 +340,8 @@ void onEvent (ev_t ev) {
 
           gwcnt = LMIC.nGws;
           margin = LMIC.gwMargin -7.5 - (isf * 2.5);
-          UISet(&UIInputbox_6nssds, gwcnt);
+	  String gwcntsnr = String(String(gwcnt) + " SNR: " + String(margin));
+          UISet(&UIInputbox_6nssds, gwcntsnr);
         }
 
 #ifdef M5go
