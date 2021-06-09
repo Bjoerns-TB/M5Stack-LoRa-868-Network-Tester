@@ -152,6 +152,9 @@ Pushing button B will let you cycle through each spreadfactor. By pushig button 
   
 ## Changelog
 
+  - 09.06.2021
+    - set Rx Delay to 5 seconds for V3
+
   - 12.04.2021
     - remove old margin calculation (completely wrong)  
     - calculate the uplink SNR based on the margin in SSV Mode, save UL SNR in SSV file
