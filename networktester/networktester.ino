@@ -597,6 +597,7 @@ void initlora() {
   LMIC_setDrTxpow(DR_SF7, 14);
 
   LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+  LMIC.rxDelay = 5;
 
   frcntinit();
 }
@@ -694,7 +695,8 @@ void initloraabp() {
   LMIC_setLinkCheckMode(0);
 
   LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
-
+  LMIC.rxDelay = 5;
+	
   // TTN uses SF9 for its RX2 window.
   LMIC.dn2Dr = DR_SF9;
 
@@ -717,6 +719,7 @@ void initloraotaa() {
   LMIC_setAdrMode(0);
   LMIC_setLinkCheckMode(0);
   LMIC_setClockError(MAX_CLOCK_ERROR * 1 / 100);
+  LMIC.rxDelay = 5;
   next = false;
   LMIC_startJoining();
   UISet(&UIInputbox_awnh87, "Joining");
