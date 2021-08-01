@@ -51,7 +51,6 @@ int sats;
 
 //LoRa
 int isf = 0;
-int oldisf = 0;
 const char *dr[6] = {"DR5", "DR4", "DR3", "DR2", "DR1", "DR0"};
 const char *sf[6] = {"SF7", "SF8", "SF9", "SF10", "SF11", "SF12"};
 RTC_DATA_ATTR int iwm = 0;
@@ -760,27 +759,19 @@ void sendobject(osjob_t* j) {
 
     //UISet(&UIInputbox_awnh87, "Sending");
 
-    if (oldisf != isf) {
       if (isf == 0) {
         LMIC_setDrTxpow(DR_SF7, 14);
-        oldisf = isf;
       } else if (isf == 1) {
         LMIC_setDrTxpow(DR_SF8, 14);
-        oldisf = isf;
       } else if (isf == 2) {
         LMIC_setDrTxpow(DR_SF9, 14);
-        oldisf = isf;
       } else if (isf == 3) {
         LMIC_setDrTxpow(DR_SF10, 14);
-        oldisf = isf;
       } else if (isf == 4) {
         LMIC_setDrTxpow(DR_SF11, 14);
-        oldisf = isf;
       } else if (isf == 5) {
         LMIC_setDrTxpow(DR_SF12, 14);
-        oldisf = isf;
       }
-    }
 
 #ifdef M5gps
     if (LMIC.opmode & OP_TXRXPEND) {
@@ -814,27 +805,19 @@ void sendobject(osjob_t* j) {
 
     UISet(&UIInputbox_awnh87, "ACK");
 
-    if (oldisf != isf) {
       if (isf == 0) {
         LMIC_setDrTxpow(DR_SF7, 14);
-        oldisf = isf;
       } else if (isf == 1) {
         LMIC_setDrTxpow(DR_SF8, 14);
-        oldisf = isf;
       } else if (isf == 2) {
         LMIC_setDrTxpow(DR_SF9, 14);
-        oldisf = isf;
       } else if (isf == 3) {
         LMIC_setDrTxpow(DR_SF10, 14);
-        oldisf = isf;
       } else if (isf == 4) {
         LMIC_setDrTxpow(DR_SF11, 14);
-        oldisf = isf;
       } else if (isf == 5) {
         LMIC_setDrTxpow(DR_SF12, 14);
-        oldisf = isf;
       }
-    }
 
 #ifdef M5gps
     if (LMIC.opmode & OP_TXRXPEND) {
@@ -866,33 +849,25 @@ void sendobject(osjob_t* j) {
 
     UISet(&UIInputbox_awnh87, "LCR");
 
-    if (oldisf != isf) {
       if (isf == 0) {
         LMIC_setDrTxpow(DR_SF7, 14);
-        oldisf = isf;
         cnt = -1;
       } else if (isf == 1) {
         LMIC_setDrTxpow(DR_SF8, 14);
-        oldisf = isf;
         cnt = -1;
       } else if (isf == 2) {
         LMIC_setDrTxpow(DR_SF9, 14);
-        oldisf = isf;
         cnt = -1;
       } else if (isf == 3) {
         LMIC_setDrTxpow(DR_SF10, 14);
-        oldisf = isf;
         cnt = -1;
       } else if (isf == 4) {
         LMIC_setDrTxpow(DR_SF11, 14);
-        oldisf = isf;
         cnt = -1;
       } else if (isf == 5) {
         LMIC_setDrTxpow(DR_SF12, 14);
-        oldisf = isf;
         cnt = -1;
       }
-    }
 
 #ifdef M5gps
     if (LMIC.opmode & OP_TXRXPEND) {
